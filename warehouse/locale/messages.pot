@@ -3030,7 +3030,7 @@ msgstr ""
 
 #: warehouse/templates/includes/file-details.html:65
 #, python-format
-msgid "Uploaded via: %(uploaded_via)s"
+msgid "Uploaded via: <code>%(uploaded_via)s</code>"
 msgstr ""
 
 #: warehouse/templates/includes/file-details.html:72

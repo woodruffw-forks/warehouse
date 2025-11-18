@@ -62,7 +62,7 @@
       {% endtrans %}
     </li>
     {% if file.uploaded_via %}
-      <li>{% trans uploaded_via=file.uploaded_via %} Uploaded via: {{ uploaded_via }} {% endtrans %}</li>
+      <li>{% trans uploaded_via=file.uploaded_via %} Uploaded via: <code>{{ uploaded_via }}</code> {% endtrans %}</li>
     {% endif %}
   </ul>
 </div>
