@@ -175,9 +175,7 @@ def test_store_purge_keys_organization_project_add_survives_events_committed_sta
     # Construct an OrganizationEvent with `source=organization` to force
     # `events` into Organization's committed_state before the next flush.
     # This is the exact state the manage view produces via `record_event`.
-    db_request.db.add(
-        organization.Event(source=organization, tag="test:regression")
-    )
+    db_request.db.add(organization.Event(source=organization, tag="test:regression"))
 
     db_request.db.flush()
 
