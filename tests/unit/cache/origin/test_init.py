@@ -149,21 +149,8 @@ def test_store_purge_keys_organization_project_add_survives_events_committed_sta
 ):
     # Regression guard for issue #19911.
     #
-    # `store_purge_keys` skips emitting a purge for a dirty object whose
-    # `committed_state` is a subset of `_NON_CACHE_RELEVANT_ATTRS` (the
-    # perf optimizations in PRs #19898 and #19910). Before this fix,
-    # `add_organization_project` relied on `flag_dirty(org)` to trigger an
-    # Organization-dirty purge — but the manage view then recorded an event
-    # on the organization, setting `event.source = org` and back-populating
-    # the `events` dynamic collection, which put `'events'` in the
-    # Organization's committed_state. The skip then masked the only purge
-    # for `org/{orgname}`, leaving the CDN entry stale.
-    #
-    # The fix makes the purge come from the new OrganizationProject row
-    # (session.new, not session.dirty) — the skip applies only to dirty
-    # objects, so a `session.new` row is unaffected. This test pins down
-    # that behavior: the `org/{name}` purge must still fire even when the
-    # Organization has `events` in its committed_state at flush time.
+    # We should purge `org/{name}` even when the Organization's
+    # `committed_state` includes `events` (or any other non-cache-relevant attr).
     organization = OrganizationFactory.create()
     project = ProjectFactory.create()
     db_request.db.flush()
